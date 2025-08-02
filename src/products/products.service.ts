@@ -18,18 +18,26 @@ export class ProductsService {
   }
 
   async findAll(): Promise<Product[]> {
-    return this.productsRepository.find();
+    return this.productsRepository.find({
+      relations: ['category', 'supplier'],
+    });
   }
 
   async findOne(id: string): Promise<Product> {
-    const product = await this.productsRepository.findOne({ where: { id_product: id } });
-    if(!product){
+    const product = await this.productsRepository.findOne({
+      where: { id_product: id },
+      relations: ['category', 'supplier'],
+    });
+    if (!product) {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
     return product;
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
     const product = await this.findOne(id);
     await this.productsRepository.update(id, updateProductDto);
     return this.findOne(id);
