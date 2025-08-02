@@ -4,11 +4,12 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
 
 import { Category } from '../../categories/entities/category.entity';
+import { Supplier } from '../../suppliers/entities/supplier.entity';
 
 @Entity()
 export class Product {
@@ -39,7 +40,11 @@ export class Product {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Category, (category) => category.product)
+  @ManyToOne(() => Category, (category) => category.product)
   @JoinColumn({ name: 'id_category' })
   category: Category;
+
+  @ManyToOne(() => Supplier, (supplier) => supplier.products)
+  @JoinColumn({ name: 'id_supplier' })
+  supplier: Supplier;
 }
