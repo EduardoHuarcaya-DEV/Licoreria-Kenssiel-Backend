@@ -22,10 +22,10 @@ export class Product {
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   description: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   imageUrl: string;
 
   @Column()

@@ -30,13 +30,13 @@ export class SuppliersService {
     return supplier;
   }
 
-  async update(id: string, updateSupplierDto: UpdateSupplierDto) {
+  async update(id: string, updateSupplierDto: UpdateSupplierDto): Promise<Supplier> {
     const supplier = await this.findOne(id)
     await this.suppliersRepository.update(id, updateSupplierDto)
     return this.findOne(id)
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<{ message: string }> {
     const supplier = await this.findOne(id)
     await this.suppliersRepository.softRemove(supplier);
     return { message: `The supplier ${supplier.name} has been removed` }
