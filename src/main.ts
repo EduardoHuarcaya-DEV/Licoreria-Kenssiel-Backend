@@ -8,6 +8,10 @@ async function bootstrap() {
   // Prefijo global para las rutas
   app.setGlobalPrefix('api/v1');
 
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  })
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
